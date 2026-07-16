@@ -38,12 +38,14 @@ export function BaseNode({ data, isConnectable }: NodeProps<NodeData>) {
 
   return (
     <div className={`base-node glass-panel status-${statusClass}`}>
-      <Handle
-        type="target"
-        position={Position.Top}
-        isConnectable={isConnectable}
-        className="node-handle"
-      />
+      {type !== 'client' && (
+        <Handle
+          type="target"
+          position={Position.Top}
+          isConnectable={isConnectable}
+          className="node-handle"
+        />
+      )}
       
       <div className="node-header">
         <div className="node-icon" style={{ color: COLOR_MAP[type] }}>
