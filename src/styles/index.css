@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Background */
+  --bg-primary: hsl(225, 25%, 8%);
+  --bg-secondary: hsl(225, 25%, 12%);
+  --bg-tertiary: hsl(225, 20%, 16%);
+  --bg-glass: hsla(225, 25%, 15%, 0.7);
+
+  /* Accent */
+  --accent-primary: hsl(250, 90%, 65%);
+  --accent-hover: hsl(250, 90%, 72%);
+  --accent-glow: hsla(250, 90%, 65%, 0.3);
+
+  /* Traffic Status */
+  --status-healthy: hsl(145, 70%, 50%);
+  --status-warning: hsl(40, 90%, 55%);
+  --status-critical: hsl(0, 80%, 55%);
+
+  /* Text */
+  --text-primary: hsl(0, 0%, 95%);
+  --text-secondary: hsl(225, 15%, 60%);
+  --text-muted: hsl(225, 10%, 40%);
+
+  /* Borders & Shadows */
+  --border-color: hsla(225, 15%, 30%, 0.5);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 15px var(--accent-glow);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden; /* App is a fullscreen dashboard */
+  width: 100vw;
+  height: 100vh;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color);
+}
