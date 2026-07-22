@@ -47,6 +47,10 @@ export interface StorageProps extends BaseComponentProps {
 export interface LoadBalancerProps extends BaseComponentProps {
   layer: 'L4 (Transport)' | 'L7 (Application)';
   algorithm: 'Round Robin' | 'Least Connections';
+  provider: 'Cloud Managed' | 'Self-Hosted';
+  instances: number;
+  sslTermination: boolean;
+  wafEnabled: boolean;
 }
 
 export interface WorkerProps extends BaseComponentProps {
