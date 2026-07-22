@@ -107,6 +107,10 @@ export const COMPONENT_CATALOG: CatalogItem[] = [
       properties: {
         layer: 'L7 (Application)',
         algorithm: 'Round Robin',
+        provider: 'Cloud Managed',
+        instances: 1,
+        sslTermination: false,
+        wafEnabled: false,
         latencyMs: 5,
       }
     }

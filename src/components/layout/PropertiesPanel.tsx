@@ -130,6 +130,34 @@ export function PropertiesPanel() {
             );
           }
           
+          if (key === 'provider') {
+            const options = data.type === 'load_balancer' ? ['Cloud Managed', 'Self-Hosted'] : ['s3', 'gcs'];
+            return (
+              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <label style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Provider</label>
+                <select value={value as string} onChange={(e) => handleChange(key, e.target.value)} style={inputStyles}>
+                  {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </div>
+            );
+          }
+
+          if (typeof value === 'boolean') {
+            return (
+              <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0' }}>
+                <input 
+                  type="checkbox" 
+                  checked={value}
+                  onChange={(e) => handleChange(key, e.target.checked)}
+                  style={{ accentColor: 'var(--accent-primary)', width: '16px', height: '16px' }}
+                />
+                <label style={{ fontSize: '12px', color: 'var(--text-secondary)', textTransform: 'capitalize' }}>
+                  {key.replace(/([A-Z])/g, ' $1').trim()}
+                </label>
+              </div>
+            );
+          }
+          
           return (
             <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <label style={{ fontSize: '12px', color: 'var(--text-secondary)', textTransform: 'capitalize' }}>
@@ -142,6 +170,7 @@ export function PropertiesPanel() {
                   value={value}
                   onChange={(e) => handleChange(key, Number(e.target.value))}
                   style={inputStyles}
+                  disabled={data.type === 'load_balancer' && key === 'instances' && properties.provider === 'Cloud Managed'}
                 />
               ) : (
                 <input 

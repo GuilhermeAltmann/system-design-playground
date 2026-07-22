@@ -62,16 +62,33 @@ function calculateWorkerCapacity(props: WorkerProps) {
 }
 
 function calculateLoadBalancerCapacity(props: LoadBalancerProps) {
-  let capacity = 500000; // L4 is very fast
+  let capacity = 0;
   let latency = 2;
 
+  let baseCapacity = props.layer === 'L4 (Transport)' ? 500000 : 50000;
+
   if (props.layer === 'L7 (Application)') {
-    capacity = 50000; // L7 parsing overhead
     latency = 5;
+    if (props.sslTermination) {
+      baseCapacity *= 0.7; // 30% penalty
+      latency += 2;
+    }
+    if (props.wafEnabled) {
+      baseCapacity *= 0.4; // 60% penalty
+      latency += 10;
+    }
   }
   
   if (props.algorithm === 'Least Connections') {
-    capacity *= 0.8; // slightly more overhead to track state
+    baseCapacity *= 0.8; 
+  }
+
+  if (props.provider === 'Cloud Managed') {
+    // Cloud managed abstracts instances away and auto-scales massively.
+    capacity = baseCapacity * 100;
+  } else {
+    // Self-hosted relies on manual instances scaling
+    capacity = baseCapacity * (props.instances || 1);
   }
 
   return { capacity, latency: props.latencyMs || latency };

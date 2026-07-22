@@ -1,16 +1,20 @@
 ## Descrição
-Esta Pull Request corrige um pequeno bug visual (UI/UX) no componente `BaseNode`. O `Client` atua exclusivamente como um gerador inicial de tráfego, mas estava sendo renderizado com um ponto de conexão de entrada no topo.
+Esta Pull Request adiciona opções avançadas de dimensionamento e configuração ao componente `Load Balancer`, permitindo aos arquitetos simular com mais fidelidade os gargalos de rede e *capacity planning* do mundo real.
 
 ## Tipo de mudança
-- [x] 🐛 Correção de bug (`fix`)
+- [x] 🆕 Nova funcionalidade (`feat`)
 
 ## O que foi feito
-- Inclusão de um render condicional (`type !== 'client'`) no `BaseNode.tsx` para ocultar o `<Handle type="target" />`.
+- Adicionadas as propriedades `provider`, `instances`, `sslTermination` e `wafEnabled` ao `LoadBalancerProps`.
+- Atualizado o `PropertiesPanel` para renderizar seletores, entradas numéricas e checkboxes dinâmicos para booleanos.
+- Atualizado o motor de cálculo (`calculator.ts`) aplicando penalidades de throughput e latência para SSL Termination (-30% req/s) e WAF (-60% req/s, +10ms latência), além de suporte à escala horizontal em modo `Self-Hosted`.
 
 ## Como testar
-1. Acesse `http://localhost:5173`.
-2. Arraste o `Client` para a tela e veja que ele não possui a bolinha de entrada superior, apenas a de saída na base.
+1. Abra a aplicação localmente (`npm run dev`).
+2. Adicione um `Load Balancer` no canvas e conecte um Client a ele.
+3. No painel de propriedades, selecione `Self-Hosted` e varie a quantidade de instâncias.
+4. Marque `SSL Termination` e `WAF Enabled` e observe as mudanças de throughput e cor das conexões no canvas.
 
 ## Checklist
 - [x] Código segue os padrões do projeto
-- [x] Interface limpa de erros e logs
+- [x] Alterações integradas ao motor matemático de simulação
